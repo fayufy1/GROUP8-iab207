@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fest4Music</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="Style/style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-music me-2"></i>Fest4Music
+        </a>
+        <div class="search-bar">
+            <input class="form-control" type="text" placeholder="Search">
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Events.html">Event Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="create.html">Create</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        More
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="history.html">Bookings</a></li>
+                        <li><a class="dropdown-item" href="#">Contact</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Help</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <!-- Hero Section -->
+    <div class="jumbotron jumbotron-fluid hero-section" style="background-image: url('Img/main.jpg'); background-size: cover;">
+        <div class="container text-center">
+            <h1 class="display-4">Buy concert tickets on the most powerful events platform</h1>
+            <p class="lead">Find your favorite artists and events, and experience unforgettable moments.</p>
+            <a href="#upcoming-events" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
+    </div>
+
+
+    <!-- Main content -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Event Categories</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card event-category-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-guitar me-2"></i>Rock</h5>
+                    <div class="card-image">
+                        <img src="Img/rock.jpg" class="img-fluid" alt="Rock">
+                    </div>
+                    <p class="card-text">Check out upcoming rock concerts.</p>
+                    <a href="#upcoming-events" class="btn btn-primary btn-block">View Events</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card event-category-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-star me-2"></i>Pop</h5>
+                    <div class="card-image">
+                        <img src="Img/pop.jpg" class="img-fluid" alt="Pop">
+                    </div>
+                    <p class="card-text">Discover the latest pop music events.</p>
+                    <a href="#upcoming-events" class="btn btn-primary btn-block">View Events</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card event-category-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-headphones mr-2"></i>Electronic</h5>
+                    <div class="card-image">
+                        <img src="Img/electronic.jpg" class="img-fluid" alt="Electronic" width="100%">
+                    </div>
+                    <p class="card-text">Experience electrifying electronic music festivals.</p>
+                    <a href="#upcoming-events" class="btn btn-primary btn-block">View Events</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Main content -->
+<div class="container mt-5">
+    <!-- Event Categories -->
+    <!-- Event category cards code here -->
+    
+  <!-- Upcoming Events -->
+  <h2 id="upcoming-events" class="mt-5 mb-4">Upcoming Events</h2>
+  <div class="row">
+      <!-- Event 1: Coachella Fest -->
+      <div class="col-md-4 mb-4">
+          <div class="card h-100">
+              <!-- Event 1 image -->
+              <img src="Img/event1.jpg" class="card-img-top" alt="Event Image">
+              <!-- Event 1 details -->
+              <div class="card-body">
+                  <h5 class="card-title">Coachella Fest</h5>
+                  <p class="card-text">Experience the world's most iconic music festival at Coachella Valley.</p>
+                  <p><strong>Date:</strong> April 15-17, 2024</p>
+                  <p><strong>Time:</strong> 10:00 AM - 11:59 PM</p>
+                  <p><strong>Venue:</strong> Coachella Valley, California</p>
+                  <div class="progress mb-3">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75% Tickets Left</div>
+                  </div>
+                  <!-- Add more event details or promotional content -->
+                  <p>Don't miss out on this unforgettable experience!</p>
+                  <a href="Events.html" class="btn btn-primary">Book Now</a>
+              </div>
+          </div>
+      </div>
+      <!-- Event 2: Brisbane Fest -->
+      <div class="col-md-4 mb-4">
+          <div class="card h-100">
+              <!-- Event 2 image -->
+              <img src="Img/event2.jpg" class="card-img-top" alt="Event Image">
+              <!-- Event 2 details -->
+              <div class="card-body">
+                  <h5 class="card-title">Brisbane Fest</h5>
+                  <p class="card-text">Join us for an unforgettable experience at Brisbane Fest.</p>
+                  <p><strong>Date:</strong> May 20-22, 2024</p>
+                  <p><strong>Time:</strong> 12:00 PM - 11:00 PM</p>
+                  <p><strong>Venue:</strong> Brisbane, Australia</p>
+                  <div class="progress mb-3">
+                      <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50% Tickets Left</div>
+                  </div>
+                  <!-- Add more event details or promotional content -->
+                  <p>Join us for an amazing weekend of music and fun!</p>
+                  <a href="Events.html" class="btn btn-primary">Book Now</a>
+              </div>
+          </div>
+      </div>
+      <!-- Event 3: Woodland Fest -->
+      <div class="col-md-4 mb-4">
+          <div class="card h-100">
+              <!-- Event 3 image -->
+              <img src="Img/event3.jpg" width="150%"class="card-img-top" alt="Event Image">
+              <!-- Event 3 details -->
+              <div class="card-body">
+                  <h5 class="card-title">Woodland Fest</h5>
+                  <p class="card-text">Get ready for a magical experience at Woodland Fest.</p>
+                  <p><strong>Date:</strong> June 18-20, 2024</p>
+                  <p><strong>Time:</strong> 11:00 AM - 10:00 PM</p>
+                  <p><strong>Venue:</strong> Woodland Park, Oregon</p>
+                  <div class="progress mb-3">
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25% Tickets Left</div>
+                  </div>
+                  <!-- Add more event details or promotional content -->
+                  <p>Experience a weekend of music and nature in the heart of Oregon!</p>
+                  <a href="Events.html" class="btn btn-primary">Book Now</a>
+              </div>
+          </div>
+      </div>
+      <!-- Event 4: Post Malone Concert -->
+      <div class="col-md-4 mb-4">
+          <div class="card h-100">
+              <!-- Event 4 image -->
+              <img src="Img/post.jpg" class="card-img-top" alt="Post Malone Concert">
+              <!-- Event 4 details -->
+              <div class="card-body">
+                  <h5 class="card-title">Post Malone Concert</h5>
+                  <p class="card-text">Join us for the ultimate concert experience with Post Malone!</p>
+                  <p><strong>Date:</strong> July 10-12, 2024</p>
+                  <p><strong>Time:</strong> 8:00 PM - 12:00 AM</p>
+                  <p><strong>Venue:</strong> TBD</p>
+                  <div class="progress mb-3">
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Sold Out</div>
+                  </div>
+                  <!-- Add more event details or promotional content -->
+                  <p>This event is now sold out!</p>
+                  <a href="#" class="btn btn-primary">Details</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Footer Section -->
+<footer class="footer bg-dark py-4">
+    <div class="container text-center text-white">
+        <p class="mb-0">&copy; 2024 Fest4Music. All rights reserved.</p>
+    </div>
+</footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Font Awesome Icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</body>
+</html>

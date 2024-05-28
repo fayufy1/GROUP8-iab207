@@ -1,0 +1,117 @@
+/* Custom CSS for Event Details Page */
+/* Event Details Container */
+.event-details-container {
+    padding: 20px;
+}
+
+/* Event Image */
+.img-fluid {
+    width: 100%;
+    height: auto;
+}
+
+/* Event Details Card */
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff; /* Change title color to primary */
+}
+
+.card-text {
+    color: #555;
+}
+
+.list-group-item {
+    background-color: transparent;
+    border-color: transparent;
+    color: #777;
+}
+
+/* Booking Form */
+#bookingForm {
+    margin-top: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: all 0.3s ease; /* Add transition effect */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+/* Comments Section */
+.comments {
+    margin-top: 20px;
+}
+
+.comment {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+.comment strong {
+    color: #007bff;
+}
+
+.comment .timestamp {
+    color: #999;
+    font-size: 0.9rem;
+    float: right;
+}
+
+/* Comment Form */
+#commentForm {  
+    margin-top: 20px;
+}
+
+#commentForm textarea {
+    resize: vertical;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+}
+
+#commentForm button {
+    border-radius: 10px;
+}
+
+#commentForm button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+/* Additional Styling */
+.list-group-item strong {
+    color: #007bff; /* Change color of strong elements */
+}
+
+.list-group-item .text-success {
+    color: #28a745; /* Change color of success status */
+    font-weight: bold;
+}
+
+/* Highlight event status and category */
+.list-group-item strong {
+    margin-right: 5px; /* Add space between icon and text */
+}
+
+.list-group-item .text-success::before {
+    content: "\2022"; /* Add bullet before status text */
+    color: #28a745; /* Match color with success status */
+    font-weight: bold;
+    margin-right: 5px; /* Add space between bullet and text */
+}

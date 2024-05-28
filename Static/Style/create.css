@@ -1,0 +1,84 @@
+/* Custom CSS for Event Creation/Update Page */
+
+/* Body */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    padding-top: 56px; /* Adjust for fixed top navbar */
+}
+
+/* Form Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Form Title */
+h1 {
+    color: #333;
+}
+
+/* Form Labels */
+label {
+    font-weight: bold;
+}
+
+/* Form Inputs */
+.form-control {
+    border-radius: 20px;
+}
+
+/* Search Bar */
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+}
+
+.search-bar input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Category Icons */
+.category-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+/* Submit Button */
+.btn-primary {
+    border-radius: 20px;
+}
+
+/* Navbar Brand */
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-brand i {
+    font-size: 28px;
+    margin-right: 5px;
+}
+
+/* Navbar Search Bar */
+.search-bar input[type="text"] {
+    width: 300px;
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+}
+
+.search-bar input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

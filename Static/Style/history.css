@@ -1,0 +1,72 @@
+/* Custom CSS for Booking History Page */
+
+/* Styling for Booking History Container */
+.booking-history-container {
+    background-color: #f8f9fa; /* Light background color */
+    padding: 50px 20px;
+}
+
+/* Styling for Booking Cards */
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* White background color */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Enhance box shadow on hover */
+}
+
+.card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333; /* Darken text color for better readability */
+    margin-bottom: 10px; /* Add some bottom margin */
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Styling for Navigation Bar */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.1rem;
+}
+
+/* Styling for Search Bar */
+.search-bar input[type="text"] {
+    width: 200px;
+}
+
+/* Styling for Category Icons */
+.category-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+/* Highlighting Booking History Button in Navbar */
+.navbar-nav .booking-history.active .nav-link {
+    color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .booking-history-container {
+        padding: 30px 10px;
+    }
+}
