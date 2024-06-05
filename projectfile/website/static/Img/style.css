@@ -56,7 +56,7 @@ body {
 }
 
 .jumbotron.hero-section {
-    background-image: url('Img/main.jpg');
+   /* background-image: url('Img/main.jpg');*/
     background-size: cover;
     background-position: center;
     color: white;

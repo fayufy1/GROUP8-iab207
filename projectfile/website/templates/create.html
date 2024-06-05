@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Create/Update Event{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Fill Event Details</h1>
+        <form>
+            <div class="mb-3">
+                <label for="eventName" class="form-label">Event Name</label>
+                <input type="text" class="form-control" id="eventName" required>
+            </div>
+            <div class="mb-3">
+                <label for="eventLocation" class="form-label">Location</label>
+                <input type="text" class="form-control" id="eventLocation" required>
+            </div>
+            <div class="mb-3">
+                <label for="eventDate" class="form-label">Date</label>
+                <input type="date" class="form-control" id="eventDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="eventStartTime" class="form-label">Start Time</label>
+                <input type="time" class="form-control" id="eventStartTime" required>
+            </div>
+            <div class="mb-3">
+                <label for="organizerName" class="form-label">Organizer Name</label>
+                <input type="text" class="form-control" id="organizerName" required>
+            </div>
+            <div class="mb-3">
+                <label for="organizerContact" the form-label">Organizer Contact</label>
+                <input type="text" class="form-control" id="organizerContact" required>
+            </div>
+            <div class="mb-3">
+                <label for="ticketType" class="form-label">Ticket Type</label>
+                <select class="form-select" id="ticketType" required>
+                    <option value="">Select Ticket Type</option>
+                    <option value="general">General Admission</option>
+                    <option value="vip">VIP</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="ticketPrice" class="form-label">Price ($)</label>
+                <input type="number" class="form-control" id="ticketPrice" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Music Categories</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="pop" value="pop">
+                    <label class="form-check-label" for="pop">Pop</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rock" value="rock">
+                    <label class="form-check-label" for="rock">Rock</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="electronic" value="electronic">
+                    <label class="form-check-label" for="electronic">Electronic</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="jazz" value="jazz">
+                    <label class="form-check-label" for="jazz">Jazz</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="eventDescription" the form-label">Event Description</label>
+                <textarea class="form-control" id="eventDescription" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="eventImage" the form-label">Event Image</label>
+                <input type="file" class="form-control" id="eventImage" accept="image/*" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Create/Update Event</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
