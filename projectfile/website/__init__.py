@@ -9,10 +9,15 @@ from .models import User
 def create_app():
     app = Flask(__name__)
     Bootstrap5(app)
-    app.config['SECRET_KEY'] = 'fayaaz'  # Change this to a real, secure key!
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitedata.sqlite'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = 'fayaaz1'  # Change this to a real, secure key!
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///yourdatabase.db'
+    #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
+
+    # Configure upload folder
+    UPLOAD_FOLDER = 'static/img'  # Relative path from your main application directory
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
@@ -26,5 +31,6 @@ def create_app():
         from .views import main_bp
         app.register_blueprint(main_bp)
         app.register_blueprint(auth.auth_bp)
+        db.create_all()
 
     return app

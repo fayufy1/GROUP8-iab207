@@ -20,9 +20,12 @@ class Event(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
     date = db.Column(db.Date, nullable=False)
-    image = db.Column(db.String(255))
+    time = db.Column(db.Time, nullable=False)
+    image = db.Column(db.String(400))
+    venue = db.Column(db.String(400))
     status = db.Column(db.String(20), nullable=False)
     category = db.Column(db.String(50), nullable=False)
+    price = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     comments = db.relationship('Comment', backref='event', lazy=True)
 

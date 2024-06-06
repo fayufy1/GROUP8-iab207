@@ -28,15 +28,16 @@ class MultiCheckboxField(SelectMultipleField):
 class EventForm(FlaskForm):
     title = StringField('Event Name', validators=[DataRequired()])
     location = StringField('Location', validators=[DataRequired()])
-    date = DateField('Date', validators=[DataRequired()], format='%Y-%m-%d')
-    start_time = TimeField('Start Time', validators=[DataRequired()], format='%H:%M')
+    date = DateField('Date', validators=[DataRequired()])
+    start_time = TimeField('Start Time', validators=[DataRequired()])
     organizer_name = StringField('Organizer Name', validators=[DataRequired()])
     organizer_contact = StringField('Organizer Contact', validators=[DataRequired()])
-    ticket_type = SelectField('Ticket Type', choices=[('general', 'General'), ('vip', 'VIP')], validators=[DataRequired()])
-    ticket_price = DecimalField('Price ($)', validators=[DataRequired()])
-    music_categories = MultiCheckboxField('Music Categories', choices=[
+    ticket_type = SelectMultipleField('Ticket Type', choices=[('general', 'General'), ('vip', 'VIP')],coerce=str)
+    ticket_price = StringField('Price ($)', validators=[DataRequired()])
+    music_categories = SelectMultipleField('Music Categories', choices=[
         ('pop', 'Pop'), ('rock', 'Rock'), ('electronic', 'Electronic'), ('jazz', 'Jazz')
     ], coerce=str)
     description = TextAreaField('Event Description', validators=[DataRequired()])
     image = FileField('Event Image', validators=[DataRequired()])
+    status = SelectField('Event Status', choices=[('Open', 'Open'), ('Inactive', 'Inactive'), ('Sold Out', 'Sold Out'), ('Cancelled', 'Cancelled')], validators=[DataRequired()])
     submit = SubmitField('Create/Update Event')

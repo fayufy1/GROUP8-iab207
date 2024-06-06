@@ -4,7 +4,8 @@
 
 {% block content %}
 <!-- Hero Section -->
-<div class="jumbotron jumbotron-fluid hero-section" style="background-image: url('static/Img/main.jpg'); background-size: cover;">
+<div class="jumbotron jumbotron-fluid hero-section"
+    style="background-image: url('static/Img/main.jpg'); background-size: cover;">
     <div class="container text-center">
         <h1 class="display-4">Buy concert tickets on the most powerful events platform</h1>
         <p class="lead">Find your favorite artists and events, and experience unforgettable moments.</p>
@@ -22,16 +23,21 @@
         <div class="col-md-4 mb-4">
             <div class="card event-category-card h-100">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-{{ 'guitar' if cat == 'Rock' else 'star' if cat == 'Pop' else 'headphones' }} me-2"></i>{{ cat }}</h5>
+                    <h5 class="card-title"><i
+                            class="fas fa-{{ 'guitar' if cat == 'Rock' else 'star' if cat == 'Pop' else 'headphones' }} me-2"></i>{{
+                        cat }}</h5>
                     <div class="card-image">
-                        <img src="{{ url_for('static', filename='Img/' + cat.lower() + '.jpg') }}" class="img-fluid" alt="{{ cat }}">
+                        <img src="{{ url_for('static', filename='Img/' + cat.lower() + '.jpg') }}" class="img-fluid"
+                            alt="{{ cat }}">
                     </div>
                     <p class="card-text">Check out upcoming {{ cat.lower() }} concerts.</p>
-                    <a href="{{ url_for('main.index', category=cat) }}" class="btn btn-primary btn-block">View Events</a>
+                    <a href="{{ url_for('main.index', category=cat.lower()) }}" class="btn btn-primary btn-block">View
+                        Events</a>
                 </div>
             </div>
         </div>
-        {% endfor %}        
+        {% endfor %}
+
     </div>
 </div>
 
@@ -41,15 +47,15 @@
     {% for event in events %}
     <div class="col-md-4 mb-4">
         <div class="card h-100">
-            <img src="{{ url_for('static', filename='Img/' + event.image) }}" class="card-img-top" alt="{{ event.title }}">
+            <img src="{{ event.image }}" class="card-img-top" alt="{{ event.title }}">
             <div class="card-body">
                 <h5 class="card-title">{{ event.title }}</h5>
                 <p class="card-text">{{ event.description }}</p>
                 <p><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d') }}</p>
                 <p><strong>Venue:</strong> {{ event.venue }}</p>
-                <div class="progress mb-3">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ event.status }}" aria-valuemin="0" aria-valuemax="100">{{ event.status }}% Tickets Left</div>
-                </div>
+                <p><strong>Category:</strong> {{ event.category }}</p>
+                <!-- Status Indicator -->
+                <p><strong>Status:</strong> <span class="{{ 'text-success' if event.status == 'Open' else 'text-danger' if event.status in ['Sold Out', 'Cancelled'] else 'text-warning' }}">{{ event.status }}</span></p>
                 <a href="{{ url_for('main.event_detail', event_id=event.id) }}" class="btn btn-primary">Book Now</a>
             </div>
         </div>

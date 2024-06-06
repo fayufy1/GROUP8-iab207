@@ -1,65 +1,27 @@
 {% extends 'base.html' %}
-{% block title %}Create/Update Event{% endblock %}
+{% block title %}Booking History{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <h1 class="text-center mb-4">Fill Event Details</h1>
-    <form method="post" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <div class="mb-3">
-            {{ form.title.label(class="form-label") }}
-            {{ form.title(class="form-control") }}
-        </div>
-        <div class="mb-3">
-            {{ form.location.label(class="form-label") }}
-            {{ form.location(class="form-control") }}
-        </div>
-        <div class="mb-3">
-            {{ form.date.label(class="form-label") }}
-            {{ form.date(class="form-control") }}
-        </div>
-        <div class="mb-3">
-            {{ form.start_time.label(class="form-label") }}
-            {{ form.start_time(class="form-control") }}
-        </div>
-        <div class="mb-3">
-            {{ form.organizer_name.label(class="form-label") }}
-            {{ form.organizer_name(class="form-control") }}
-        </div>
-        <div class="mb-3">
-            {{ form.organizer_contact.label(class="form-label") }}
-            {{ form.organizer_contact(class="form-control") }}
-        </div>
-        <div class="mb-3">
-            {{ form.ticket_type.label(class="form-label") }}
-            {{ form.ticket_type(class="form-select") }}
-        </div>
-        <div class="mb-3">
-            {{ form.ticket_price.label(class="form-label") }}
-            {{ form.ticket_price(class="form-control") }}
-        </div>
-        <div class="mb-3">
-            {{ form.music_categories.label(class="form-label") }}
-            <div>
-                {% for subfield in form.music_categories %}
-                <div class="form-check">
-                    {{ subfield(class="form-check-input") }}
-                    {{ subfield.label(class="form-check-label") }}
+<div class="container booking-history-container my-5">
+    <h1 class="text-center mb-4">Booking History</h1>
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ order.event.image}}" class="card-img-top" alt="{{ order.event.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ order.event.title }}</h5>
+                    <p class="card-text">Booking ID: #{{ order.id }}</p>
+                    <p class="card-text">Date Booked: {{ order.date_ordered.strftime('%B %d, %Y') }}</p>
+                    <p class="card-text">Tickets: {{ order.quantity }}</p>
                 </div>
-                {% endfor %}
             </div>
         </div>
-        <div class="mb-3">
-            {{ form.description.label(class="form-label") }}
-            {{ form.description(class="form-control", rows="3") }}
+        {% else %}
+        <div class="col-12">
+            <p class="text-center">No bookings found.</p>
         </div>
-        <div class="mb-3">
-            {{ form.image.label(class="form-label") }}
-            {{ form.image(class="form-control") }}
-        </div>
-        <div class="text-center">
-            {{ form.submit(class="btn btn-primary") }}
-        </div>
-    </form>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

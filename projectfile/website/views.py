@@ -11,7 +11,6 @@ from flask import current_app
 main_bp = Blueprint('main', __name__, template_folder='templates')
 
 
-
 @main_bp.route('/event/<int:event_id>', methods=['GET', 'POST'])
 
 def event_detail(event_id):
@@ -52,49 +51,62 @@ def event_detail(event_id):
 @main_bp.route('/category/<category>')
 def index(category=None):
     if category:
-        events = Event.query.filter_by(category=category).all()
+        # Convert category to lowercase before filtering
+        events = Event.query.filter(Event.category.ilike(category.lower())).all()
     else:
         events = Event.query.all()
     return render_template('index.html', events=events, category=category)
+
+
+
 
 
 @main_bp.route('/events')
 def events():
     return render_template('events.html')
 
+def check_upload_file(form):
+  #get file data from form  
+  fp = form.image.data
+  filename = fp.filename
+  #get the current path of the module file… store image file relative to this path  
+  BASE_PATH = os.path.dirname(__file__)
+  #upload file location – directory of this file/static/image
+  upload_path = os.path.join(BASE_PATH, 'static/img', secure_filename(filename))
+  #store relative path in DB as image location in HTML is relative
+  db_upload_path = '/static/img/' + secure_filename(filename)
+  #save the file and return the db upload path
+  fp.save(upload_path)
+  return db_upload_path 
+
 @main_bp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
     form = EventForm()
     if form.validate_on_submit():
-        file = form.image.data
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)  # Save file to filesystem
+        if form.image.data:
+            image_path = check_upload_file(form)
+            # Create a new event instance with the returned image path
 
-        # Create a new event instance
-        new_event = Event(
-            title=form.title.data,
-            description=form.description.data,
-            date=form.date.data,
-            start_time=form.start_time.data,
-            organizer_name=form.organizer_name.data,
-            organizer_contact=form.organizer_contact.data,
-            ticket_type=form.ticket_type.data,
-            price=float(form.ticket_price.data),
-            category=', '.join([subfield.label.text for subfield in form.music_categories if subfield.data]),  # Proper handling of checkboxes
-            image=filename,
-            status='Open',  # Default status
-            user_id=current_user.id
-        )
-
-        # Add to the database session and commit
-        db.session.add(new_event)
-        db.session.commit()
-
-        flash('Event created successfully!', 'success')
-        return redirect(url_for('main.event_detail', event_id=new_event.id))  # Redirect to the detail view of the event
-
+            selected_categories = ', '.join(form.music_categories.data)
+            new_event = Event(
+                title=form.title.data,
+                description=form.description.data,
+                date=form.date.data,
+                time=form.start_time.data,
+                venue=form.location.data,
+                price=form.ticket_price.data,
+                category=selected_categories,
+                image=image_path,  # Assuming this stores the relative path
+                status='Open',  # Default status when creating an event
+                user_id=current_user.id
+            )
+            db.session.add(new_event)
+            db.session.commit()
+            flash('Event created successfully!', 'success')
+            return redirect(url_for('main.event_detail', event_id=new_event.id))
+        else:
+            flash('An image file is required.', 'error')
     return render_template('create.html', form=form)
 
 @main_bp.route('/history')
@@ -104,3 +116,5 @@ def history():
     # Fetch orders that belong to the user
     orders = Order.query.filter_by(user_id=user_id).all()
     return render_template('history.html', orders=orders)
+
+
