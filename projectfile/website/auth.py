@@ -44,6 +44,8 @@ def signup():
                 first_name=form.first_name.data,
                 surname=form.surname.data,
                 email=form.email.data,
+                street_address = form.street_address.data,
+                contact_number = form.contact_number.data,
                 password=hashed_password
             )
             db.session.add(new_user)
