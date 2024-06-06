@@ -1,26 +1,26 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Event, Comment, User, db, Order
 from flask_login import login_required, current_user
-from .forms import RegisterForm
+from .forms import EventForm
 from werkzeug.security import generate_password_hash
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
+from flask import current_app
 
 main_bp = Blueprint('main', __name__, template_folder='templates')
 
 
 
 @main_bp.route('/event/<int:event_id>', methods=['GET', 'POST'])
-@login_required
+
 def event_detail(event_id):
     event = Event.query.get_or_404(event_id)
     comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.date_posted.desc()).all()
 
-    if request.method == 'POST':
-        # Handling the form submission for booking tickets
-        fullName = request.form.get('fullName')  # Assuming you might use it later
-        email = request.form.get('email')  # Assuming you might use it later
-        ticketQuantity = int(request.form.get('ticketQuantity'))  # Ensure 'ticketQuantity' is correct in your form
-
+    if request.method == 'POST' and 'ticketQuantity' in request.form:
+        # Handle ticket booking
+        ticketQuantity = int(request.form.get('ticketQuantity'))
         new_order = Order(
             quantity=ticketQuantity,
             date_ordered=datetime.utcnow(),
@@ -31,9 +31,22 @@ def event_detail(event_id):
         db.session.commit()
         flash('Your tickets have been booked successfully!', 'success')
         return redirect(url_for('main.history'))
+    elif request.method == 'POST' and 'comment' in request.form:
+        # Handle comment submission
+        content = request.form.get('comment')
+        new_comment = Comment(
+            content=content,
+            date_posted=datetime.utcnow(),
+            user_id=current_user.id,
+            event_id=event_id
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+        return redirect(url_for('main.event_detail', event_id=event_id))
 
-    # The same view is used for GET requests to display the page
     return render_template('events.html', event=event, comments=comments)
+
 
 @main_bp.route('/')
 @main_bp.route('/category/<category>')
@@ -49,9 +62,40 @@ def index(category=None):
 def events():
     return render_template('events.html')
 
-@main_bp.route('/create')
+@main_bp.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
-    return render_template('create.html')
+    form = EventForm()
+    if form.validate_on_submit():
+        file = form.image.data
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)  # Save file to filesystem
+
+        # Create a new event instance
+        new_event = Event(
+            title=form.title.data,
+            description=form.description.data,
+            date=form.date.data,
+            start_time=form.start_time.data,
+            organizer_name=form.organizer_name.data,
+            organizer_contact=form.organizer_contact.data,
+            ticket_type=form.ticket_type.data,
+            price=float(form.ticket_price.data),
+            category=', '.join([subfield.label.text for subfield in form.music_categories if subfield.data]),  # Proper handling of checkboxes
+            image=filename,
+            status='Open',  # Default status
+            user_id=current_user.id
+        )
+
+        # Add to the database session and commit
+        db.session.add(new_event)
+        db.session.commit()
+
+        flash('Event created successfully!', 'success')
+        return redirect(url_for('main.event_detail', event_id=new_event.id))  # Redirect to the detail view of the event
+
+    return render_template('create.html', form=form)
 
 @main_bp.route('/history')
 @login_required  # Ensure only logged-in users can access this page
@@ -60,5 +104,3 @@ def history():
     # Fetch orders that belong to the user
     orders = Order.query.filter_by(user_id=user_id).all()
     return render_template('history.html', orders=orders)
-
-

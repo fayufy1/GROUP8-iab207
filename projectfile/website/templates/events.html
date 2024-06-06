@@ -66,7 +66,7 @@
                     </div>
                     <!-- Add Comment Form -->
                     {% if current_user.is_authenticated %}
-                    <form id="commentForm">
+                    <form id="commentForm" action="{{ url_for('main.event_detail', event_id=event.id) }}" method="post">
                         <div class="mb-3">
                             <label for="comment" class="form-label">Your Comment:</label>
                             <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>

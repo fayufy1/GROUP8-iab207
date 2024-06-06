@@ -10,6 +10,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation bar -->
@@ -61,12 +73,14 @@
         </div>
     </nav>
 
-    {% block content %}
-    <!-- Content overridden by each page -->
-    {% endblock %}
+    <div class="content">
+        {% block content %}
+        <!-- Content overridden by each page -->
+        {% endblock %}
+    </div>
 
     <!-- Footer Section -->
-    <footer class="footer bg-dark py-4">
+    <footer class="footer bg-dark py-4 mt-auto">
         <div class="container text-center text-white">
             <p class="mb-0">&copy; 2024 Fest4Music. All rights reserved.</p>
         </div>

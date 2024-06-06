@@ -11,11 +11,11 @@ auth_bp = Blueprint('auth', __name__)
 # this is a hint for a login function
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    login_form = LoginForm()
+    form = LoginForm()
     error = None
-    if login_form.validate_on_submit():
-        user_email = login_form.email.data  # Assuming your LoginForm has an 'email' field
-        password = login_form.password.data
+    if form.validate_on_submit():
+        user_email = form.email.data  # Assuming your LoginForm has an 'email' field
+        password = form.password.data
         user = db.session.scalar(db.select(User).where(User.email == user_email))
         if user is None:
             error = 'Incorrect email'
@@ -30,7 +30,7 @@ def login():
             return redirect(nextp)
         else:
             flash(error)
-    return render_template('user.html', form=login_form, heading='Login')
+    return render_template('user.html', form=form, heading='Login')
 
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():

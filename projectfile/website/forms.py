@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, DataRequired
+from wtforms import StringField, SubmitField, DateField, SelectField, TextAreaField, FileField,BooleanField, FormField, TimeField, DecimalField, SelectMultipleField, widgets
 
 # creates the login information
 class LoginForm(FlaskForm):
@@ -17,3 +18,25 @@ class RegisterForm(FlaskForm):
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('password', message="Passwords must match")])
     submit = SubmitField("Sign Up")
 
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
+
+class EventForm(FlaskForm):
+    title = StringField('Event Name', validators=[DataRequired()])
+    location = StringField('Location', validators=[DataRequired()])
+    date = DateField('Date', validators=[DataRequired()], format='%Y-%m-%d')
+    start_time = TimeField('Start Time', validators=[DataRequired()], format='%H:%M')
+    organizer_name = StringField('Organizer Name', validators=[DataRequired()])
+    organizer_contact = StringField('Organizer Contact', validators=[DataRequired()])
+    ticket_type = SelectField('Ticket Type', choices=[('general', 'General'), ('vip', 'VIP')], validators=[DataRequired()])
+    ticket_price = DecimalField('Price ($)', validators=[DataRequired()])
+    music_categories = MultiCheckboxField('Music Categories', choices=[
+        ('pop', 'Pop'), ('rock', 'Rock'), ('electronic', 'Electronic'), ('jazz', 'Jazz')
+    ], coerce=str)
+    description = TextAreaField('Event Description', validators=[DataRequired()])
+    image = FileField('Event Image', validators=[DataRequired()])
+    submit = SubmitField('Create/Update Event')
