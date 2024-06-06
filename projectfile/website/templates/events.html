@@ -23,7 +23,8 @@
                         <li class="list-group-item"><strong>Category:</strong> {{ event.category }}</li>
                         <li class="list-group-item"><strong>Price:</strong> ${{ event.price }}</li>
                     </ul>
-                    <form id="bookingForm">
+                    {% if current_user.is_authenticated %}
+                    <form id="bookingForm" method="POST">
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Full Name:</label>
                             <input type="text" class="form-control" id="fullName" name="fullName" required>
@@ -38,6 +39,9 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Book Now</button>
                     </form>
+                    {% else %}
+                    <p>Please <a href="{{ url_for('auth.login') }}">login</a> or <a href="{{ url_for('auth.signup') }}">sign up</a> to book tickets.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -61,6 +65,7 @@
                         {% endfor %}
                     </div>
                     <!-- Add Comment Form -->
+                    {% if current_user.is_authenticated %}
                     <form id="commentForm">
                         <div class="mb-3">
                             <label for="comment" class="form-label">Your Comment:</label>
@@ -68,6 +73,9 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Post Comment</button>
                     </form>
+                    {% else %}
+                    <p>Please <a href="{{ url_for('auth.login') }}">login</a> to post comments.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

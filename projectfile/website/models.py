@@ -1,6 +1,8 @@
 from .database import db
 from datetime import datetime
 from flask_login import UserMixin
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
@@ -37,4 +39,4 @@ class Order(db.Model):
     date_ordered = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
-    event = db.relationship('Event')
+    event = db.relationship('Event')    

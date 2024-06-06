@@ -2,44 +2,26 @@
 {% block title %}Booking History{% endblock %}
 
 {% block content %}
-    <!-- Booking History Container -->
-    <div class="container booking-history-container my-5">
-        <h1 class="text-center mb-4">Booking History</h1>
-        <!-- Booking Cards -->
-        <div class="row">
-            <!-- Booking 1 -->
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <img src="static/Img/event1.jpg" class="card-img-top" alt="Event Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Coachella Fest</h5>
-                        <p class="card-text">Booking ID: #123456</p>
-                        <p class="card-text">Date Booked: july 1, 2024</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Booking 2 -->
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <img src="static/Img/event2.jpg" class="card-img-top" alt="Event Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Brisbane Fest</h5>
-                        <p class="card-text">Booking ID: #789012</p>
-                        <p class="card-text">Date Booked: June 5, 2024</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Booking 3 -->
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <img src="static/Img/event3.jpg" class="card-img-top" alt="Event Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Woodland Fest</h5>
-                        <p class="card-text">Booking ID: #345678</p>
-                        <p class="card-text">Date Booked: August 10, 2024</p>
-                    </div>
+<div class="container booking-history-container my-5">
+    <h1 class="text-center mb-4">Booking History</h1>
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='Img/' + order.event.image) }}" class="card-img-top" alt="{{ order.event.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ order.event.title }}</h5>
+                    <p class="card-text">Booking ID: #{{ order.id }}</p>
+                    <p class="card-text">Date Booked: {{ order.date_ordered.strftime('%B %d, %Y') }}</p>
+                    <p class="card-text">Tickets: {{ order.quantity }}</p>
                 </div>
             </div>
         </div>
+        {% else %}
+        <div class="col-12">
+            <p class="text-center">No bookings found.</p>
+        </div>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}
