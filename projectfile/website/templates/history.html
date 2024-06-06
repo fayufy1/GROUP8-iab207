@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Booking History{% endblock %}
+
+{% block content %}
+<div class="container booking-history-container my-5">
+    <h1 class="text-center mb-4">Booking History</h1>
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='Img/' + order.event.image) }}" class="card-img-top" alt="{{ order.event.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ order.event.title }}</h5>
+                    <p class="card-text">Booking ID: #{{ order.id }}</p>
+                    <p class="card-text">Date Booked: {{ order.date_ordered.strftime('%B %d, %Y') }}</p>
+                    <p class="card-text">Tickets: {{ order.quantity }}</p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <p class="text-center">No bookings found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

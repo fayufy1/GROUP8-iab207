@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+<!-- Event Details Container -->
+<div class="container event-details-container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Event Image -->
+            <img src="{{ url_for('static', filename='Img/' + event.image) }}" class="img-fluid rounded-top" alt="Event Image">
+        </div>
+        <div class="col-md-6">
+            <!-- Event Details -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ event.title }}</h5>
+                    <p class="card-text">{{ event.description }}</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d') }}</li>
+                        <li class="list-group-item"><strong>Time:</strong> {{ event.time.strftime('%H:%M %p') if event.time else 'All Day' }}</li>
+                        <li class="list-group-item"><strong>Venue:</strong> {{ event.venue }}</li>
+                        <li class="list-group-item"><strong>Status:</strong> <span class="{{ 'text-success' if event.status == 'Upcoming' else 'text-danger' }}">{{ event.status }}</span></li>
+                        <li class="list-group-item"><strong>Category:</strong> {{ event.category }}</li>
+                        <li class="list-group-item"><strong>Price:</strong> ${{ event.price }}</li>
+                    </ul>
+                    {% if current_user.is_authenticated %}
+                    <form id="bookingForm" method="POST">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name:</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ticketQuantity" class="form-label">Number of Tickets:</label>
+                            <input type="number" class="form-control" id="ticketQuantity" name="ticketQuantity" min="1" max="10" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Book Now</button>
+                    </form>
+                    {% else %}
+                    <p>Please <a href="{{ url_for('auth.login') }}">login</a> or <a href="{{ url_for('auth.signup') }}">sign up</a> to book tickets.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Comments Section -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Comments</h5>
+                    <div class="comments">
+                        <!-- Existing Comments -->
+                        {% for comment in comments %}
+                        <div class="comment">
+                            <strong>{{ comment.user.first_name }} {{ comment.user.surname }}:</strong>
+                            {{ comment.content }}
+                            <span class="timestamp">- Posted on {{ comment.date_posted.strftime('%Y-%m-%d') }}</span>
+                        </div>
+                        {% else %}
+                        <p>No comments yet.</p>
+                        {% endfor %}
+                    </div>
+                    <!-- Add Comment Form -->
+                    {% if current_user.is_authenticated %}
+                    <form id="commentForm">
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Your Comment:</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Comment</button>
+                    </form>
+                    {% else %}
+                    <p>Please <a href="{{ url_for('auth.login') }}">login</a> to post comments.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
