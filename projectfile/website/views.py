@@ -62,11 +62,13 @@ def index(category=None):
 @login_required
 def edit_event(event_id):
     event = Event.query.get_or_404(event_id)
-    if event.user_id != current_user.id:
+    if event.user_id!= current_user.id:
         flash('You are not authorized to edit this event.', 'warning')
         return redirect(url_for('main.index'))
     form = EventForm(obj=event)
     if form.validate_on_submit():
+        
+        image_path = check_upload_file(form)
         selected_categories = ', '.join(form.music_categories.data)
         event.title = form.title.data
         event.description = form.description.data
@@ -74,11 +76,13 @@ def edit_event(event_id):
         event.time = form.start_time.data
         event.venue = form.location.data
         event.price = form.ticket_price.data
-        event.category=selected_categories  # Ensure proper category selection
+        event.category = selected_categories  # Ensure proper category selection
+        event.status = form.status.data  # Update the status
+        event.image= image_path
         db.session.commit()
         flash('Event updated successfully!', 'success')
         return redirect(url_for('main.event_detail', event_id=event_id))
-    
+
     return render_template('create.html', form=form, event_id=event_id)
 
 @main_bp.route('/event/cancel/<int:event_id>', methods=['POST'])
