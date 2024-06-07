@@ -11,7 +11,7 @@
                 <img src="{{ order.event.image}}" class="card-img-top" alt="{{ order.event.title }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ order.event.title }}</h5>
-                    <p class="card-text">Booking ID: #{{ order.id }}</p>
+                    <p class="card-text">Booking ID: #{{ order.id }}-{{ "%05d"|format(range(10000, 99999)|random) }}</p>
                     <p class="card-text">Date Booked: {{ order.date_ordered.strftime('%B %d, %Y') }}</p>
                     <p class="card-text">Tickets: {{ order.quantity }}</p>
                 </div>

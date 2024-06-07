@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from .database import db  # Updated import
 from flask_login import LoginManager
@@ -32,5 +32,10 @@ def create_app():
         app.register_blueprint(main_bp)
         app.register_blueprint(auth.auth_bp)
         db.create_all()
+        
+    @app.errorhandler(404) 
+    # inbuilt function which takes error as parameter 
+    def not_found(e): 
+      return render_template("error.html", error=e)
 
     return app
