@@ -58,6 +58,41 @@ def index(category=None):
     return render_template('index.html', events=events, category=category)
 
 
+@main_bp.route('/event/edit/<int:event_id>', methods=['GET', 'POST'])
+@login_required
+def edit_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    if event.user_id != current_user.id:
+        flash('You are not authorized to edit this event.', 'warning')
+        return redirect(url_for('main.index'))
+    form = EventForm(obj=event)
+    if form.validate_on_submit():
+        selected_categories = ', '.join(form.music_categories.data)
+        event.title = form.title.data
+        event.description = form.description.data
+        event.date = form.date.data
+        event.time = form.start_time.data
+        event.venue = form.location.data
+        event.price = form.ticket_price.data
+        event.category=selected_categories  # Ensure proper category selection
+        db.session.commit()
+        flash('Event updated successfully!', 'success')
+        return redirect(url_for('main.event_detail', event_id=event_id))
+    
+    return render_template('create.html', form=form, event_id=event_id)
+
+@main_bp.route('/event/cancel/<int:event_id>', methods=['POST'])
+@login_required
+def cancel_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    if event.user_id != current_user.id:
+        flash('You are not authorized to cancel this event.', 'warning')
+        return redirect(url_for('main.event_detail', event_id=event_id))
+    
+    db.session.delete(event)  # Delete the event from the database
+    db.session.commit()
+    flash('Event has been cancelled.', 'success')
+    return redirect(url_for('main.index'))
 
 
 
