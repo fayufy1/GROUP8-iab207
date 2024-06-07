@@ -89,7 +89,13 @@ def cancel_event(event_id):
         flash('You are not authorized to cancel this event.', 'warning')
         return redirect(url_for('main.event_detail', event_id=event_id))
     
-    db.session.delete(event)  # Delete the event from the database
+    # Delete comments associated with the event
+    comments = Comment.query.filter_by(event_id=event_id).all()
+    for comment in comments:
+        db.session.delete(comment)
+    
+    # Delete the event
+    db.session.delete(event)
     db.session.commit()
     flash('Event has been cancelled.', 'success')
     return redirect(url_for('main.index'))
