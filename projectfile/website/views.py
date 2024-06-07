@@ -8,14 +8,14 @@ from werkzeug.utils import secure_filename
 import os
 from flask import current_app
 
+# Create a blueprint for the main routes
 main_bp = Blueprint('main', __name__, template_folder='templates')
 
 
 @main_bp.route('/event/<int:event_id>', methods=['GET', 'POST'])
-
 def event_detail(event_id):
-    event = Event.query.get_or_404(event_id)
-    comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.date_posted.desc()).all()
+    event = Event.query.get_or_404(event_id)  # Get event by ID or 404 if not found
+    comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.date_posted.desc()).all()  # Get comments for the event
 
     if request.method == 'POST' and 'ticketQuantity' in request.form:
         # Handle ticket booking
@@ -30,6 +30,7 @@ def event_detail(event_id):
         db.session.commit()
         flash('Your tickets have been booked successfully!', 'success')
         return redirect(url_for('main.history'))
+
     elif request.method == 'POST' and 'comment' in request.form:
         # Handle comment submission
         content = request.form.get('comment')
@@ -51,7 +52,7 @@ def event_detail(event_id):
 @main_bp.route('/category/<category>')
 def index(category=None):
     if category:
-        # Convert category to lowercase before filtering
+        # Filter events by category
         events = Event.query.filter(Event.category.ilike(category.lower())).all()
     else:
         events = Event.query.all()
@@ -61,34 +62,35 @@ def index(category=None):
 @main_bp.route('/event/edit/<int:event_id>', methods=['GET', 'POST'])
 @login_required
 def edit_event(event_id):
-    event = Event.query.get_or_404(event_id)
-    if event.user_id!= current_user.id:
+    event = Event.query.get_or_404(event_id)  # Get event by ID or 404 if not found
+    if event.user_id != current_user.id:
         flash('You are not authorized to edit this event.', 'warning')
         return redirect(url_for('main.index'))
     form = EventForm(obj=event)
     if form.validate_on_submit():
-        
         image_path = check_upload_file(form)
         selected_categories = ', '.join(form.music_categories.data)
+        # Update event details
         event.title = form.title.data
         event.description = form.description.data
         event.date = form.date.data
         event.time = form.start_time.data
         event.venue = form.location.data
         event.price = form.ticket_price.data
-        event.category = selected_categories  # Ensure proper category selection
-        event.status = form.status.data  # Update the status
-        event.image= image_path
+        event.category = selected_categories
+        event.status = form.status.data
+        event.image = image_path
         db.session.commit()
         flash('Event updated successfully!', 'success')
         return redirect(url_for('main.event_detail', event_id=event_id))
 
     return render_template('create.html', form=form, event_id=event_id)
 
+
 @main_bp.route('/event/cancel/<int:event_id>', methods=['POST'])
 @login_required
 def cancel_event(event_id):
-    event = Event.query.get_or_404(event_id)
+    event = Event.query.get_or_404(event_id)  # Get event by ID or 404 if not found
     if event.user_id != current_user.id:
         flash('You are not authorized to cancel this event.', 'warning')
         return redirect(url_for('main.event_detail', event_id=event_id))
@@ -105,24 +107,25 @@ def cancel_event(event_id):
     return redirect(url_for('main.index'))
 
 
-
 @main_bp.route('/events')
 def events():
     return render_template('events.html')
 
+
 def check_upload_file(form):
-  #get file data from form  
-  fp = form.image.data
-  filename = fp.filename
-  #get the current path of the module file… store image file relative to this path  
-  BASE_PATH = os.path.dirname(__file__)
-  #upload file location – directory of this file/static/image
-  upload_path = os.path.join(BASE_PATH, 'static/img', secure_filename(filename))
-  #store relative path in DB as image location in HTML is relative
-  db_upload_path = '/static/img/' + secure_filename(filename)
-  #save the file and return the db upload path
-  fp.save(upload_path)
-  return db_upload_path 
+    # Get file data from form
+    fp = form.image.data
+    filename = fp.filename
+    # Get the current path of the module file
+    BASE_PATH = os.path.dirname(__file__)
+    # Upload file location - directory of this file/static/image
+    upload_path = os.path.join(BASE_PATH, 'static/img', secure_filename(filename))
+    # Store relative path in DB as image location in HTML is relative
+    db_upload_path = '/static/img/' + secure_filename(filename)
+    # Save the file and return the db upload path
+    fp.save(upload_path)
+    return db_upload_path
+
 
 @main_bp.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -132,7 +135,6 @@ def create():
         if form.image.data:
             image_path = check_upload_file(form)
             # Create a new event instance with the returned image path
-
             selected_categories = ', '.join(form.music_categories.data)
             new_event = Event(
                 title=form.title.data,
@@ -142,7 +144,7 @@ def create():
                 venue=form.location.data,
                 price=form.ticket_price.data,
                 category=selected_categories,
-                image=image_path,  # Assuming this stores the relative path
+                image=image_path,
                 status='Open',  # Default status when creating an event
                 user_id=current_user.id
             )
@@ -154,6 +156,7 @@ def create():
             flash('An image file is required.', 'error')
     return render_template('create.html', form=form)
 
+
 @main_bp.route('/history')
 @login_required  # Ensure only logged-in users can access this page
 def history():
@@ -161,5 +164,3 @@ def history():
     # Fetch orders that belong to the user
     orders = Order.query.filter_by(user_id=user_id).all()
     return render_template('history.html', orders=orders)
-
-
