@@ -39,7 +39,7 @@ class EventForm(FlaskForm):
     ticket_type = SelectMultipleField('Ticket Type', choices=[('general', 'General'), ('vip', 'VIP')],coerce=str)
     ticket_price = StringField('Price ($)', validators=[DataRequired()])
     music_categories = SelectMultipleField('Music Categories', choices=[
-        ('pop', 'Pop'), ('rock', 'Rock'), ('electronic', 'Electronic'), ('jazz', 'Jazz')
+        ('pop', 'Pop'), ('rock', 'Rock'), ('electronic', 'Electronic')
     ], coerce=str)
     description = TextAreaField('Event Description', validators=[DataRequired()])
     image = FileField('Event Image', validators=[DataRequired()])
